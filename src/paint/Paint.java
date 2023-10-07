@@ -5,13 +5,18 @@
 package paint;
 
 import com.formdev.flatlaf.FlatLightLaf;
-import com.formdev.flatlaf.icons.*;
+import javax.swing.*;
+import javax.swing.tree.TreePath;
+
 
 /**
  *
  * @author 177685
  */
 public class Paint extends javax.swing.JFrame {
+    
+    TreePath[] capas = new TreePath();
+    
 
     /**
      * Creates new form Pa
@@ -38,10 +43,12 @@ public class Paint extends javax.swing.JFrame {
         Goma = new javax.swing.JButton();
         Picker = new javax.swing.JButton();
         Formas = new javax.swing.JPanel();
-        Lapiz1 = new javax.swing.JButton();
-        Texto1 = new javax.swing.JButton();
-        Goma1 = new javax.swing.JButton();
-        Picker1 = new javax.swing.JButton();
+        Linea = new javax.swing.JButton();
+        Ovalo = new javax.swing.JButton();
+        Rectangulo = new javax.swing.JButton();
+        Triangulo = new javax.swing.JButton();
+        Estrella = new javax.swing.JButton();
+        Corazon = new javax.swing.JButton();
         Tamano = new javax.swing.JPanel();
         TamanoLabel = new javax.swing.JLabel();
         TamanoSlider = new javax.swing.JSlider();
@@ -85,8 +92,13 @@ public class Paint extends javax.swing.JFrame {
         jButton55 = new javax.swing.JButton();
         jButton56 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
-        Marco = new javax.swing.JPanel();
-        canvas1 = new java.awt.Canvas();
+        Marco = new javax.swing.JSplitPane();
+        AccessoRapido = new javax.swing.JPanel();
+        Capas = new javax.swing.JScrollPane();
+        ListadoDeCapas = new javax.swing.JTree();
+        NuevaCapa = new javax.swing.JButton();
+        NuevoGrupo = new javax.swing.JButton();
+        Canvas = new javax.swing.JPanel();
         Menu = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -110,10 +122,10 @@ public class Paint extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Paint");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setMaximumSize(new java.awt.Dimension(1000, 1000));
         setMinimumSize(new java.awt.Dimension(800, 800));
         setName("Ventana"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(700, 700));
-        setResizable(false);
+        setPreferredSize(new java.awt.Dimension(1000, 1000));
 
         ToolBar.setToolTipText("");
         ToolBar.setAlignmentY(0.2F);
@@ -151,7 +163,7 @@ public class Paint extends javax.swing.JFrame {
                 .addComponent(Goma, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(Picker, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(306, Short.MAX_VALUE))
+                .addContainerGap(576, Short.MAX_VALUE))
         );
         HerramientasLayout.setVerticalGroup(
             HerramientasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -167,25 +179,35 @@ public class Paint extends javax.swing.JFrame {
 
         ToolBar.addTab("Herramientas", Herramientas);
 
-        Lapiz1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pencil.png"))); // NOI18N
-        Lapiz1.setText("Lapíz");
-        Lapiz1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        Lapiz1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        Linea.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Line.png"))); // NOI18N
+        Linea.setText("Linea");
+        Linea.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        Linea.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
-        Texto1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/text.png"))); // NOI18N
-        Texto1.setText("Texto");
-        Texto1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        Texto1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        Ovalo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Circle.png"))); // NOI18N
+        Ovalo.setText("Ovalo");
+        Ovalo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        Ovalo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
-        Goma1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/eraser.png"))); // NOI18N
-        Goma1.setText("Goma");
-        Goma1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        Goma1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        Rectangulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cube.png"))); // NOI18N
+        Rectangulo.setText("Rectangulo");
+        Rectangulo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        Rectangulo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
-        Picker1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/picker.png"))); // NOI18N
-        Picker1.setText("Picker");
-        Picker1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        Picker1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        Triangulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/triangle.png"))); // NOI18N
+        Triangulo.setText("Triangulo");
+        Triangulo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        Triangulo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+
+        Estrella.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/star.png"))); // NOI18N
+        Estrella.setText("Estrella");
+        Estrella.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        Estrella.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+
+        Corazon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/heart.png"))); // NOI18N
+        Corazon.setText("Corazón");
+        Corazon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        Corazon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         javax.swing.GroupLayout FormasLayout = new javax.swing.GroupLayout(Formas);
         Formas.setLayout(FormasLayout);
@@ -193,24 +215,30 @@ public class Paint extends javax.swing.JFrame {
             FormasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(FormasLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(Lapiz1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Linea, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(Texto1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Ovalo, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(Goma1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Rectangulo, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(Picker1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(306, Short.MAX_VALUE))
+                .addComponent(Triangulo, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(Estrella, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(Corazon, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(358, Short.MAX_VALUE))
         );
         FormasLayout.setVerticalGroup(
             FormasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(FormasLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(FormasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(Picker1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Goma1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Texto1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Lapiz1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Corazon, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Estrella, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Triangulo, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Rectangulo, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Ovalo, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Linea, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
@@ -235,7 +263,7 @@ public class Paint extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(TamanoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(TamanoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(TamanoSlider, javax.swing.GroupLayout.DEFAULT_SIZE, 718, Short.MAX_VALUE))
+                    .addComponent(TamanoSlider, javax.swing.GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE))
                 .addContainerGap())
         );
         TamanoLayout.setVerticalGroup(
@@ -251,17 +279,6 @@ public class Paint extends javax.swing.JFrame {
         ToolBar.addTab("Tamaño", Tamano);
 
         Negro.setBackground(new java.awt.Color(0, 0, 0));
-        Negro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NegroActionPerformed(evt);
-            }
-        });
-
-        Blanco.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BlancoActionPerformed(evt);
-            }
-        });
 
         Rojo.setBackground(new java.awt.Color(255, 0, 0));
 
@@ -507,20 +524,81 @@ public class Paint extends javax.swing.JFrame {
 
         ToolBar.addTab("Colores", Colores);
 
-        Marco.setAutoscrolls(true);
+        AccessoRapido.setMinimumSize(new java.awt.Dimension(120, 0));
 
-        canvas1.setCursor(new java.awt.Cursor(java.awt.Cursor.CROSSHAIR_CURSOR));
+        Capas.setToolTipText("Capas");
+        Capas.setName("Capas"); // NOI18N
 
-        javax.swing.GroupLayout MarcoLayout = new javax.swing.GroupLayout(Marco);
-        Marco.setLayout(MarcoLayout);
-        MarcoLayout.setHorizontalGroup(
-            MarcoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(canvas1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Capas");
+        javax.swing.tree.DefaultMutableTreeNode treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Base");
+        treeNode1.add(treeNode2);
+        ListadoDeCapas.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        ListadoDeCapas.setToolTipText("Capas");
+        ListadoDeCapas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        ListadoDeCapas.setName("Capas"); // NOI18N
+        ListadoDeCapas.setSelectionPaths(this.capas);
+        ListadoDeCapas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ListadoDeCapasMouseClicked(evt);
+            }
+        });
+        Capas.setViewportView(ListadoDeCapas);
+        ListadoDeCapas.getAccessibleContext().setAccessibleName("Capas");
+
+        NuevaCapa.setText("Nueva Capa");
+
+        NuevoGrupo.setText("Nuevo Grupo");
+
+        javax.swing.GroupLayout AccessoRapidoLayout = new javax.swing.GroupLayout(AccessoRapido);
+        AccessoRapido.setLayout(AccessoRapidoLayout);
+        AccessoRapidoLayout.setHorizontalGroup(
+            AccessoRapidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(Capas, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(AccessoRapidoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(AccessoRapidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(NuevoGrupo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(NuevaCapa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
-        MarcoLayout.setVerticalGroup(
-            MarcoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(canvas1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        AccessoRapidoLayout.setVerticalGroup(
+            AccessoRapidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AccessoRapidoLayout.createSequentialGroup()
+                .addComponent(Capas, javax.swing.GroupLayout.DEFAULT_SIZE, 739, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(NuevaCapa)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(NuevoGrupo)
+                .addContainerGap())
         );
+
+        Capas.getAccessibleContext().setAccessibleName("Capas");
+
+        Marco.setLeftComponent(AccessoRapido);
+
+        Canvas.setBackground(new java.awt.Color(255, 255, 255));
+        Canvas.setAutoscrolls(true);
+        Canvas.setMaximumSize(new java.awt.Dimension(800, 800));
+        Canvas.setMinimumSize(new java.awt.Dimension(200, 200));
+        Canvas.setPreferredSize(new java.awt.Dimension(800, 800));
+        Canvas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                CanvasMousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout CanvasLayout = new javax.swing.GroupLayout(Canvas);
+        Canvas.setLayout(CanvasLayout);
+        CanvasLayout.setHorizontalGroup(
+            CanvasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 863, Short.MAX_VALUE)
+        );
+        CanvasLayout.setVerticalGroup(
+            CanvasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 815, Short.MAX_VALUE)
+        );
+
+        Marco.setRightComponent(Canvas);
 
         jMenu1.setText("Archivo");
 
@@ -561,15 +639,15 @@ public class Paint extends javax.swing.JFrame {
             .addComponent(ToolBar)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(Marco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Marco)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(ToolBar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Marco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Marco)
                 .addContainerGap())
         );
 
@@ -585,13 +663,20 @@ public class Paint extends javax.swing.JFrame {
         this.TamanoLabel.setText("Tamaño del Pincel: " + Integer.toString(this.TamanoSlider.getValue()) + " pts");
     }//GEN-LAST:event_TamanoSliderStateChanged
 
-    private void BlancoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BlancoActionPerformed
+    private void CanvasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CanvasMousePressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_BlancoActionPerformed
+        
+    }//GEN-LAST:event_CanvasMousePressed
 
-    private void NegroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NegroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NegroActionPerformed
+    private void ListadoDeCapasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ListadoDeCapasMouseClicked
+        if (this.ListadoDeCapas.getSelectionCount() != 1){
+            return;
+        }
+        
+        TreePath selected = this.ListadoDeCapas.getSelectionPath();
+        System.out.println(selected);
+        
+    }//GEN-LAST:event_ListadoDeCapasMouseClicked
 
     /**
      * @param args the command line arguments
@@ -624,40 +709,45 @@ public class Paint extends javax.swing.JFrame {
         FlatLightLaf.setup();
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Paint().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Paint().setVisible(true);
         });
 
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel AccessoRapido;
     private javax.swing.JButton Azul;
     private javax.swing.JButton Blanco;
+    private javax.swing.JPanel Canvas;
+    private javax.swing.JScrollPane Capas;
     private javax.swing.JFrame ColorPicker;
     private javax.swing.JPanel Colores;
     private javax.swing.ButtonGroup ColoresBN;
+    private javax.swing.JButton Corazon;
+    private javax.swing.JButton Estrella;
     private javax.swing.JPanel Formas;
     private javax.swing.JButton Goma;
-    private javax.swing.JButton Goma1;
     private javax.swing.JPanel Herramientas;
     private javax.swing.JButton Lapiz;
-    private javax.swing.JButton Lapiz1;
-    private javax.swing.JPanel Marco;
+    private javax.swing.JButton Linea;
+    private javax.swing.JTree ListadoDeCapas;
+    private javax.swing.JSplitPane Marco;
     private javax.swing.JMenuBar Menu;
     private javax.swing.JButton Negro;
+    private javax.swing.JButton NuevaCapa;
+    private javax.swing.JButton NuevoGrupo;
+    private javax.swing.JButton Ovalo;
     private javax.swing.JButton Picker;
-    private javax.swing.JButton Picker1;
+    private javax.swing.JButton Rectangulo;
     private javax.swing.JButton Rojo;
     private javax.swing.JPanel Tamano;
     private javax.swing.JLabel TamanoLabel;
     private javax.swing.JSlider TamanoSlider;
     private javax.swing.JButton Texto;
-    private javax.swing.JButton Texto1;
     private javax.swing.JTabbedPane ToolBar;
+    private javax.swing.JButton Triangulo;
     private javax.swing.JButton Verde;
-    private java.awt.Canvas canvas1;
     private javax.swing.JButton jButton27;
     private javax.swing.JButton jButton28;
     private javax.swing.JButton jButton29;
